@@ -6,13 +6,23 @@
 
 **[MicaUSD](https://github.com/deco31416/MicaUSD-Stablecoin)** is a stablecoin project developed with the goal of providing a stable and transparent solution for value exchange, adhering to international regulations, including the **MiCA** (Markets in Crypto-Assets Regulation) framework of the European Union.
 
-This project is deployed on the **Binance Smart Chain Testnet** and is designed to ensure stability and security through a supply custody model controlled by audited and verified smart contracts. MicaUSD aims to be an example of transparency and trust in the world of stablecoins, incorporating robust security and governance standards.
+This project is deployed on the **[MicaUSDT - Binance Smart Chain Testnet](https://testnet.bscscan.com/address/0x04c385f999dddc8be75a4384c26864abe496139a)** and is designed to ensure stability and security through a supply custody model controlled by audited and verified smart contracts. MicaUSD aims to be an example of transparency and trust in the world of stablecoins, incorporating robust security and governance standards.
 
-**_walletSupplyCustodian:** The address of the wallet that will hold the supply custody.
+**[WalletOwner](https://testnet.bscscan.com/address/0x0f15F0b08C48fd66F4B852683Bd3a5d7e28364f1)** The address of the wallet that will hold the supply custody.
+```bash
+ 0x0f15F0b08C48fd66F4B852683Bd3a5d7e28364f1
+ ```
+
+ **[TokenContract](https://testnet.bscscan.com/token/0x04c385f999dddc8be75a4384c26864abe496139a)** The Token contract address.
+```bash
+ 0x04C385F999dDDc8be75A4384C26864abE496139A
+ ```
+
+**[_walletSupplyCustodian](https://testnet.bscscan.com/address/0x3f9de97cB91Fa3ca1ac000Ec5b9896a6E68FB1cb)** The address of the wallet that will hold the supply custody.
 ```bash
  0x3f9de97cB91Fa3ca1ac000Ec5b9896a6E68FB1cb
  ```
-**_initialSupply:** The initial supply of tokens to be minted. These are sent to the _walletSupplyCustodian.
+**[_initialSupply:](https://testnet.bscscan.com/tx/0xd7dc047c1585c5d7256ba659a17edbdd68a2e8df276ac7ce386e068e011c1217)** The initial supply of tokens to be minted. These are sent to the **_walletSupplyCustodian**.
 ```bash
 1000
 ```
