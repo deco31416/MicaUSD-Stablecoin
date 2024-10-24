@@ -18,14 +18,21 @@ This project is deployed on the **[MicaUSDT - Binance Smart Chain Testnet](https
  0x04C385F999dDDc8be75A4384C26864abE496139A
  ```
 
+ **[_initialSupply:](https://testnet.bscscan.com/tx/0xd7dc047c1585c5d7256ba659a17edbdd68a2e8df276ac7ce386e068e011c1217)** The initial supply of tokens to be minted. These are sent to the **_walletSupplyCustodian**.
+```bash
+1000
+```
+
 **[_walletSupplyCustodian](https://testnet.bscscan.com/address/0x3f9de97cB91Fa3ca1ac000Ec5b9896a6E68FB1cb)** The address of the wallet that will hold the supply custody.
 ```bash
  0x3f9de97cB91Fa3ca1ac000Ec5b9896a6E68FB1cb
  ```
-**[_initialSupply:](https://testnet.bscscan.com/tx/0xd7dc047c1585c5d7256ba659a17edbdd68a2e8df276ac7ce386e068e011c1217)** The initial supply of tokens to be minted. These are sent to the **_walletSupplyCustodian**.
+
+ **[SupplyCustodian](https://testnet.bscscan.com/address/0xeb70b9e122c5dc153628314ce4a7166f52f7df45)** The Supply Custodian contract address.
 ```bash
-1000
-```
+ 0xeB70B9E122c5dC153628314Ce4a7166f52F7dF45
+ ```
+
 ## Key Features
 
 1. **Stablecoin adhering to international regulations**: MicaUSD is developed with the goal of complying with current laws and regulations, including **MiCA**, ensuring transparency, security, and governance.
