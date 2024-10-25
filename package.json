@@ -1,0 +1,19 @@
+{
+  "name": "MicaUSD",
+  "version": "1.0.0",
+  "description": "MicaUSD is a stablecoin project",
+  "scripts": {
+    "test": "npx hardhat test",
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run scripts/deploy.js"
+  },
+  "dependencies": {
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.9.0",
+    "hardhat": "^2.17.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  }
+}
