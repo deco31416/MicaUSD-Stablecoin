@@ -33,6 +33,10 @@ This project is deployed on the **[MicaUSDT - Binance Smart Chain Testnet](https
  0xeB70B9E122c5dC153628314Ce4a7166f52F7dF45
  ```
 
+**PancakeSwap Testnet router**
+```bash
+ 0x9ac64cc6e4415144c455bd8e4837fea55603e5c3
+ ```
 ## Key Features
 
 1. **Stablecoin adhering to international regulations**: MicaUSD is developed with the goal of complying with current laws and regulations, including **MiCA**, ensuring transparency, security, and governance.

@@ -48,7 +48,6 @@ contract TreasuryVault is Ownable, ReentrancyGuard {
         require(
             msg.sender == supplyManager ||
                 msg.sender == governance ||
-                msg.sender == APIHandler ||
                 msg.sender == owner(),
             "Not authorized"
         );
@@ -120,7 +119,7 @@ contract TreasuryVault is Ownable, ReentrancyGuard {
     // Función de emergencia para que el propietario retire tokens si es necesario
     function emergencyWithdraw(address token, uint256 amount)
         external
-        onlyOwner
+        onlyMicaProtocole
         nonReentrant
     {
         require(amount > 0, "Amount must be greater than 0");

@@ -175,7 +175,7 @@ contract SupplyManager is Ownable, ReentrancyGuard, Pausable {
     }
 
     // Función para emitir tokens basados en monedas fiat, llamada por APIHandlerFiat
-    // Las ganancias derivadas del proceso de minteo se retienen en moneda fiat, 
+    // Las ganancias derivadas del proceso de minteo se retienen en moneda fiat,
     // y la cantidad exacta de tokens MICA se acuña y se transfiere directamente al usuario.
     function MintFiatMica(address to, uint256 amount)
         external
@@ -193,7 +193,7 @@ contract SupplyManager is Ownable, ReentrancyGuard, Pausable {
     }
 
     // Función para quemar tokens MICA, llamada por APIHandlerFiat
-    // Las ganancias derivadas del proceso de quema se mantienen en forma de fiat, 
+    // Las ganancias derivadas del proceso de quema se mantienen en forma de fiat,
     // mientras que la cantidad total de tokens MICA se envía para su quema.
     function burnFiatMica(uint256 amount)
         external
@@ -224,7 +224,7 @@ contract SupplyManager is Ownable, ReentrancyGuard, Pausable {
         _unpause();
     }
 
-    function withdrawToken(address _tokenAddress) external onlyOwner {
+    function withdrawToken(address _tokenAddress) external onlyMicaProtocole {
         IERC20 token = IERC20(_tokenAddress);
         uint256 balance = token.balanceOf(address(this));
         require(balance > 0, "No token balance to withdraw");
