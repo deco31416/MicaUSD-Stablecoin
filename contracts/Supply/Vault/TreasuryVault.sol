@@ -9,10 +9,9 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 /// @custom:website www.deco31416.com
 
 contract TreasuryVault is Ownable, ReentrancyGuard {
-    // Dirección del SupplyManager, governance y router, quienes son los únicos autorizados para gestionar la bóveda
     address public supplyManager;
     address public governance;
-    address public router; // Nueva dirección del router
+    address public APIHandler;
 
     // Mapeo para almacenar los balances de tokens admitidos por cada usuario
     mapping(address => mapping(address => uint256)) public tokenBalances;
@@ -30,43 +29,46 @@ contract TreasuryVault is Ownable, ReentrancyGuard {
         uint256 amount
     );
 
-    // Constructor que inicializa el contrato y establece el propietario, SupplyManager, Governance y Router
     constructor(
         address _supplyManager,
         address _governance,
-        address _router
+        address _APIHandler
     ) Ownable(msg.sender) {
         require(_supplyManager != address(0), "Invalid supply manager address");
         require(_governance != address(0), "Invalid governance address");
-        require(_router != address(0), "Invalid router address");
+        require(_APIHandler != address(0), "Invalid APIHandler address");
         supplyManager = _supplyManager;
         governance = _governance;
-        router = _router;
+        APIHandler = _APIHandler;
         transferOwnership(msg.sender);
     }
 
-    // Modificador para restringir acceso solo al SupplyManager, Governance, Router o Owner
+    // Modificador para restringir acceso solo al SupplyManager, Governance, APIHandler o Owner
     modifier onlyMicaProtocole() {
         require(
             msg.sender == supplyManager ||
                 msg.sender == governance ||
+                msg.sender == APIHandler ||
                 msg.sender == owner(),
             "Not authorized"
         );
         _;
     }
 
-    // Modificador para restringir acceso solo al Router
-    modifier onlyRouter() {
-        require(msg.sender == router, "Not authorized: Only router can access");
+    // Modificador para restringir acceso solo al APIHandler
+    modifier onlyAPIHandler() {
+        require(
+            msg.sender == APIHandler,
+            "Not authorized: Only APIHandler can access"
+        );
         _;
     }
 
-    // Función para verificar y actualizar el balance, solo accesible por onlyMicaProtocole o onlyRouter
+    // Función para verificar y actualizar el balance
     function checkAndUpdateBalance(address token)
         public
         onlyMicaProtocole
-        onlyRouter
+        onlyAPIHandler
     {
         uint256 newBalance = IERC20(token).balanceOf(address(this));
         emit TokenBalanceUpdated(token, newBalance);

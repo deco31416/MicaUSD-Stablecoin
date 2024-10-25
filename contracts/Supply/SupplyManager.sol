@@ -10,39 +10,46 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 /// @custom:website www.deco31416.com
 
 contract SupplyManager is Ownable, ReentrancyGuard, Pausable {
-    address private governance; 
-    address public micaToken; 
-    address public treasuryVault; 
-    address public earningVault; 
+    address private governance;
+    address public micaToken;
+    address public treasuryVault;
+    address public earningVault;
+    address public APIHandlerFiat;
 
     uint256 public mintingFeePercentage; // Porcentaje de tarifa de acuñación (0-100)
     uint256 public burningFeePercentage; // Porcentaje de tarifa de quema (0-100)
 
     // Lista de tokens admitidos
-    mapping(address => bool) public allowedTokens; 
+    mapping(address => bool) public allowedTokens;
 
     event TokenAdded(address token);
     event TokenRemoved(address token);
     event MintingFeeChanged(uint256 newFeePercentage);
     event BurningFeeChanged(uint256 newFeePercentage);
+    event FiatMicaIssued(address indexed to, uint256 amount);
+    event FiatMicaBurned(address indexed from, uint256 amount);
     event TokensMinted(address indexed to, uint256 amount);
     event TokensBurned(address indexed from, uint256 amount);
 
     constructor(
         address _micaToken,
         address _governance,
-        address _treasuryVault, 
-        address _earningVault 
-    )
-        Ownable(msg.sender) 
-    {
-        require(_governance != address(0), "Invalid governance address");
+        address _APIHandlerFiat,
+        address _treasuryVault,
+        address _earningVault
+    ) Ownable(msg.sender) {
         require(_micaToken != address(0), "Invalid MICA token address");
+        require(_governance != address(0), "Invalid governance address");
+        require(
+            _APIHandlerFiat != address(0),
+            "Invalid APIHandlerFiat address"
+        );
         require(_treasuryVault != address(0), "Invalid treasuryVault address");
         require(_earningVault != address(0), "Invalid earningVault address");
 
         micaToken = _micaToken;
         governance = _governance;
+        APIHandlerFiat = _APIHandlerFiat;
         treasuryVault = _treasuryVault;
         earningVault = _earningVault;
 
@@ -55,6 +62,15 @@ contract SupplyManager is Ownable, ReentrancyGuard, Pausable {
         require(
             msg.sender == owner() || msg.sender == governance,
             "Not Owner or Governance"
+        );
+        _;
+    }
+
+    // Modificador para restringir acceso solo al APIHandlerFiat
+    modifier onlyAPIHandlerFiat() {
+        require(
+            msg.sender == APIHandlerFiat,
+            "Not authorized: Only APIHandlerFiat can access"
         );
         _;
     }
@@ -156,6 +172,47 @@ contract SupplyManager is Ownable, ReentrancyGuard, Pausable {
 
         // Emitir evento para notificar al usuario que se han quemado los tokens MICA
         emit TokensBurned(token, micaAmount);
+    }
+
+    // Función para emitir tokens basados en monedas fiat, llamada por APIHandlerFiat
+    // Las ganancias derivadas del proceso de minteo se retienen en moneda fiat, 
+    // y la cantidad exacta de tokens MICA se acuña y se transfiere directamente al usuario.
+    function MintFiatMica(address to, uint256 amount)
+        external
+        nonReentrant
+        onlyAPIHandlerFiat
+    {
+        require(amount > 0, "Amount must be greater than 0");
+        require(to != address(0), "Invalid recipient address");
+
+        // Llamar al contrato de MICA para acuñar tokens MICA y transferirlos a la dirección "to"
+        MICAUSDT(micaToken).SupplyManagerMint(to, amount);
+
+        // Emitir evento para registrar la emisión de MICA basado en fiat
+        emit FiatMicaIssued(to, amount);
+    }
+
+    // Función para quemar tokens MICA, llamada por APIHandlerFiat
+    // Las ganancias derivadas del proceso de quema se mantienen en forma de fiat, 
+    // mientras que la cantidad total de tokens MICA se envía para su quema.
+    function burnFiatMica(uint256 amount)
+        external
+        nonReentrant
+        onlyAPIHandlerFiat
+    {
+        require(amount > 0, "Amount must be greater than 0");
+
+        // Transferir los tokens MICA desde el usuario al contrato SupplyManager
+        require(
+            IERC20(micaToken).transferFrom(msg.sender, address(this), amount),
+            "Transfer of MICA to SupplyManager failed"
+        );
+
+        // Llamar al contrato de MICA para quemar los tokens MICA
+        MICAUSDT(micaToken).SupplyManagerBurn(address(this), amount);
+
+        // Emitir evento para registrar la quema de tokens MICA
+        emit FiatMicaBurned(msg.sender, amount);
     }
 
     // Funciones de pausa y reactivación
