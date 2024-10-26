@@ -43,6 +43,8 @@ This project is deployed on the **[MicaUSDT - Binance Smart Chain Testnet](https
  0x9ac64cc6e4415144c455bd8e4837fea55603e5c3
  ```
 
+ ![MicaUSD Process](https://github.com/deco31416/MicaUSD-Stablecoin/blob/main/public/MicaUSD-Process.svg)
+
  ## MicaUSD Issuance
 
 The issuance of MicaUSD is done using several backup methods:
@@ -67,6 +69,9 @@ The MicaUSD protocol is made up of interconnected smart contracts that ensure st
 - **PriceOracles**: They offer real-time pricing to maintain the stability of the system.
 - **RiskManager and EmergencyShutdown**: Monitor and protect the system in case of compromise.
 - **UpgradeabilityProxy**: Allows for future upgrades without interruption.
+
+![MicaUSD Protocole](https://github.com/deco31416/MicaUSD-Stablecoin/blob/main/public/MicaUSD.svg)
+
   
 ## Backend Functionality
 
