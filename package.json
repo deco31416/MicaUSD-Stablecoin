@@ -10,7 +10,8 @@
   "dependencies": {
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@openzeppelin/contracts": "^4.9.0",
-    "hardhat": "^2.17.0"
+    "hardhat": "^2.17.0",
+    "MicaUSD": "file:"
   },
   "devDependencies": {
     "chai": "^4.3.7",
