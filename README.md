@@ -156,3 +156,5 @@ This project is protected under the [Creative Commons Attribution 3.0 license](h
 
 **[Deco31416](https://github.com/deco31416)**  
 For more information, Visit: [deco31416.com](https://www.deco31416.com/)
+
+#### Project developed exclusively for demonstration purposes.
